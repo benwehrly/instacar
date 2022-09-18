@@ -1,0 +1,22 @@
+.favorite-tab {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 1px;
+    height: 70px;
+    width:100%;
+    overflow: scroll;
+}
+
+.favorite-img {
+    position: relative;
+    height: 100%;
+    width: 100px;
+    left: 0;
+}
+
+.favorite-tab > p{
+    margin: 0;
+    font-size: .8rem;
+    margin-left: 15px;;
+}

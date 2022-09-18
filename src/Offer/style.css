@@ -1,0 +1,28 @@
+.offer {
+  position: fixed;
+  height: 20px;
+  width: 100%;
+  background-color: rgb(255, 70, 70);
+  background-color: rgb(110, 90, 255);
+  top: 0;
+  color: white;
+  z-index: 5;
+  line-height: 20px;
+  font-weight: 1000000;
+}
+
+.offer > p {
+  margin: 0;
+  padding: 0;
+  margin-left: 22px;
+}
+
+.offer > div {
+  position: absolute;
+  left: 100%;
+  top: 3px;
+  transform: translate(-100%, -20%);
+  padding: 1px 8px;
+  cursor: pointer;
+  /* border: 1px solid black; */
+}
