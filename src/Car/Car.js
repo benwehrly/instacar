@@ -22,7 +22,7 @@ const Car = ({
   favorites,
   setFavorites
 }) => {
-  const [buttonText, setButtonText] = useState("add");
+  const [buttonText, setButtonText] = useState("Add");
   const imageRef = useRef(null);
   const [hover, setHover] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -34,14 +34,14 @@ const Car = ({
   //Handle Cart Button
 
   useEffect(() => {
-    setButtonText(cart.includes(car) ? "added" : "add");
+    setButtonText(cart.includes(car) ? "Added" : "Add");
   }, [newCars, cart]);
 
   function mouseEnterBehavior() {
     if (!cart.includes(car)) {
-      setButtonText("Add To Cart");
+      setButtonText("Add to cart");
     } else {
-      setButtonText("Remove from Cart");
+      setButtonText("Remove from cart");
     }
     setHover(true);
   }

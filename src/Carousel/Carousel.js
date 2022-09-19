@@ -8,7 +8,6 @@ const Carousel = ({ cars }) => {
 
   return (
     <div className="carousel-container" ref={wrapperRef}>
-      <h1>New Arrivals</h1>
       <motion.div
       className="carousel"
       drag="x"

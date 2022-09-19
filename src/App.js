@@ -31,6 +31,8 @@ export default function App() {
     console.log(modalImages);
   }, [modalImages]);
 
+  const isHomepage = newCars === cars
+
   return (
     <div className="App">
       {offerOpen && <Offer setOfferOpen={setOfferOpen} />}
@@ -56,8 +58,16 @@ export default function App() {
         />
       </div>
 
-      <div className="garage">
-        {newCars === cars && <Carousel cars={cars}/>} {/* Remove from garage? */}
+      {isHomepage &&<div className='hero'>
+      <h1 className='hero-title'>New Arrivals</h1>
+       <Carousel cars={data}/>
+      </div>}
+
+      <div 
+        className="garage"
+        style={{ marginTop: !isHomepage && '120px'}}  
+      >
+       {/* Remove from garage? */}
         {newCars.slice(0, maxItems).map((car, i) => (
           <Car
             key={car.id}

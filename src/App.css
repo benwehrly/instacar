@@ -41,7 +41,8 @@ body {
   position: absolute;
   bottom: -20px;
   width: 200px;
-  top: 220px;
+  top: 360px;
+  z-index: 2;
 }
 
 .noResults {
@@ -64,6 +65,14 @@ body {
   color:white;
 }
 
-.garage{
-  border: 2px solid black;
+.hero{
+  background-color: #3c3c3c;
+  /* background-color: rgb(110, 90, 255); */
+  margin-top: 90px;
+}
+
+.hero-title{
+  padding-top: 10px;
+  color:white;
+  margin: 0;
 }
