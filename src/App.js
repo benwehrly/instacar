@@ -9,16 +9,13 @@ import Chat from "./Chat/Chat.js";
 import Footer from "./Footer/Footer.js";
 import Carousel from "./Carousel/Carousel.js";
 import ShowMoreButton from "./ShowMoreButton/ShowMoreButton.js";
+import Cart from "./Cart/Cart.js"
 import data from './data'
 
 export default function App() {
 
   const [cars, setCars] = useState(data);
-
-  // const tags = useState([cars.map((car) => Object.values(car))]);
-
   const [newCars, setNewCars] = useState(data);
-  // const [sortedCars, setSortedCars] = useState([...newCars]);
   const [openModal, setOpenModal] = useState(false);
   const [modalImages, setModalImages] = useState([]);
   const [offerOpen, setOfferOpen] = useState(true);
@@ -26,12 +23,25 @@ export default function App() {
   const [cart, setCart] = useState([]);
   const [maxItems, setMaxItems] = useState(10);
   const [favorites, setFavorites] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState('New Arrivals')
+  const [ cartIsOpen, setCartIsOpen ] = useState(false);
+  const [ cartHasUpdated, setCartHasUpdated ] = useState(false);
 
   useEffect(() => {
     console.log(modalImages);
   }, [modalImages]);
 
   const isHomepage = newCars === cars
+
+  const heroCategrories = ['New Arrivals', 'Great Deals', 'Staff Picks']
+
+
+  const heroStyles = (category) => {
+    let isSelected = category === selectedCategory
+    if(isSelected){
+      return {backgroundColor: '#3e3e3e', color: 'white', outline: "2px solid #3e3e3e"}
+    }
+  }
 
   return (
     <div className="App">
@@ -46,6 +56,8 @@ export default function App() {
         setCars={setCars}
         cart={cart}
         setMaxItems={setMaxItems}
+        cartIsOpen={cartIsOpen}
+        setCartIsOpen={setCartIsOpen}
       />
       <div className="recent-container" style={{ top: cars !== newCars && '20px'}}>
         <RecentSearches
@@ -58,16 +70,26 @@ export default function App() {
         />
       </div>
 
-      {isHomepage &&<div className='hero'>
-      <h1 className='hero-title'>New Arrivals</h1>
-       <Carousel cars={data}/>
+      {isHomepage && <div className='hero'>
+      <div className='hero-categories'>
+        {heroCategrories.map(category => <h1 
+          className='hero-title'
+          onClick={() => setSelectedCategory(category)}
+          style={heroStyles(category)}
+        >{category}</h1>)}
+      </div>
+       <Carousel 
+        cars={cars}
+        selectedCategory={selectedCategory}
+        setNewCars={setNewCars}
+        />
       </div>}
 
       <div 
         className="garage"
         style={{ marginTop: !isHomepage && '120px'}}  
       >
-       {/* Remove from garage? */}
+
         {newCars.slice(0, maxItems).map((car, i) => (
           <Car
             key={car.id}
@@ -80,6 +102,8 @@ export default function App() {
             setCart={setCart}
             favorites={favorites}
             setFavorites={setFavorites}
+            cartHasUpdated={cartHasUpdated}
+            setCartHasUpdated={setCartHasUpdated}
           />
         ))}
       </div>
@@ -96,8 +120,16 @@ export default function App() {
           </button>
         </h1>
       )}
+      <Cart 
+        cart={cart} 
+        setCart={setCart}
+        cartIsOpen={cartIsOpen}
+        setCartIsOpen={setCartIsOpen}
+        cartHasUpdated={cartHasUpdated}
+        setCartHasUpdated={setCartHasUpdated}
+        />
       <Chat />
-      <ShowMoreButton setMaxItems={setMaxItems} />
+      {newCars.length > 0 && <ShowMoreButton setMaxItems={setMaxItems} />}
       <Footer />
     </div>
   );

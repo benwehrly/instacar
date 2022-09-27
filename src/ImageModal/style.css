@@ -17,7 +17,8 @@
   z-index: 4;
   background-color: rgb(255, 255, 255);
   width: 50px;
-  aspect-ratio: 1;
+  height: 50px;
+  /* aspect-ratio: 1; */
   border-radius: 50px;
   cursor: pointer;
 }
@@ -33,7 +34,7 @@
 
 .backdrop > div > img {
   position: relative;
-  border: 2px solid rgb(255, 255, 255, 0.8);
+  border: 8px solid rgb(255, 255, 255, 0.2);
   height: 50vw;
   width: 80vw;
   transform: scale(0.6);
@@ -57,10 +58,45 @@
   color:white;
   display: flex;
   align-items: center;
+  border-radius: 100px;
+  transition: transform .2s;
 }
 
-/* .backdrop > p {
+.close-modal:active {
+  transform: scale(.9);
+}
+
+/* 
+------description------
+.backdrop > p {
     position: absolute;
     color: white;
     background-color: rgb(255,255,255,.5);
   } */
+
+  @media (max-width: 600px){
+
+    .backdrop > div {
+      width: 100vw;
+      height: 40vh;
+      display: flex;
+    }
+
+    .backdrop > div > img {
+      width: 100vw;
+      transform: scale(1);
+      height: 100%;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .change-image{
+      display: none;
+    }
+
+    .close-modal {
+      left: 80%;
+      top: -220px;
+    }
+
+  }

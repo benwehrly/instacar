@@ -15,7 +15,10 @@ const Header = ({
   recent,
   cart,
   setMaxItems,
+  cartIsOpen,
+  setCartIsOpen
 }) => {
+
   const [focused, setFocused] = useState(false);
   const popular = ["camry", "honda", "electric"];
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,8 +60,6 @@ const Header = ({
         >
           Instacar
           <img
-            src="https://openclipart.org/image/800px/267551"
-            src="https://cdn-icons-png.flaticon.com/512/55/55283.png"
             src="http://cdn.onlinewebfonts.com/svg/img_127531.png"
             alt=""
             width="40px"
@@ -74,6 +75,7 @@ const Header = ({
                 onBlur={() => setTimeout(() => setFocused(false), 300)}
                 onChange={handleSearch}
                 value={searchTerm}
+                onClick={()=> setSearchTerm('')}
               />
             </form>
             <FontAwesomeIcon
@@ -107,7 +109,9 @@ const Header = ({
           style={{ backgroundColor: !cart.length && "gray" }}
           animate={{ scale: !cart.length ? 1.2 : [1.2, 1.5, 1.2] }}
           initial={{ scale: 1.2 }}
-          transition={{ duration: 0.3, repeat: 1 }}
+          transition={{ duration: 0.3, repeat: 1, delay: .1 }}
+          key={cart}
+          onClick={() => setCartIsOpen(!cartIsOpen)}
         >
           <FontAwesomeIcon
             className="cart-icon"

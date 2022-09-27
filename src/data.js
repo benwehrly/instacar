@@ -32,7 +32,7 @@ const data = [{
     color: "silver gray grey",
     year: 2012,
     miles: 65000,
-    price: 45000,
+    price: 15000,
     transmission: "automatic",
     used: true,
     id: 3,
@@ -63,7 +63,7 @@ const data = [{
     transmission: "automatic",
     used: true,
     id: 5,
-    url: "https://tdrpmimages.azureedge.net/photos/import/202204/1203/0425/a9bc3707-bc4f-4ce1-b601-6003192f4089.jpg-420x315",
+    url: "https://bloximages.newyork1.vip.townnews.com/richmond.com/content/tncms/assets/v3/classifieds/b/16/b167bc45-cbb7-56ec-b121-027bf9243ac6/5ec9f3164513c.image.jpg",
   },
   {
     make: "Honda",
@@ -144,17 +144,17 @@ const data = [{
     url: "https://i.ytimg.com/vi/lwlut1Ym0q8/maxresdefault.jpg",
   },
   {
-    make:'',
-    type:'',
-    model:'',
-    color:'',
-    year:'',
-    miles:'',
-    price:'',
-    transmission:'',
-    used:'',
+    make:'chevrolet',
+    type:'car sedan',
+    model:'el camino',
+    color:'black',
+    year:'1981',
+    miles:'81000',
+    price:'15999',
+    transmission:'automatic',
+    used:'true',
     id:12,
-    url:''
+    url:'https://silodrome.com/wp-content/uploads/2020/11/Chevrolet-El-Camino-SS_-14.jpg'
   },
 ]
 

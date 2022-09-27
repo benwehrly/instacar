@@ -1,6 +1,6 @@
 import "./style.css";
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
@@ -20,22 +20,23 @@ const Car = ({
   setCart,
   i,
   favorites,
-  setFavorites
+  setFavorites,
+  cartHasUpdated,
 }) => {
   const [buttonText, setButtonText] = useState("Add");
   const imageRef = useRef(null);
   const [hover, setHover] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
   const [hidden, setHidden] = useState(true);
   const [inCart, isInCart] = useState(false);
-  const [liked, setLiked] = useState(false)
   const { make, model, year, url, price, transmission, miles, used } = car;
+  const [count,setCount]=useState(0)
+  const [prev,setPrev]=useState(0)
 
   //Handle Cart Button
 
   useEffect(() => {
     setButtonText(cart.includes(car) ? "Added" : "Add");
-  }, [newCars, cart]);
+  }, [newCars, cart, car]);
 
   function mouseEnterBehavior() {
     if (!cart.includes(car)) {
@@ -67,46 +68,28 @@ const Car = ({
     }
   }
 
-  // Handle Image Swipe
-
-  const carImage = [
-    url,
-    "https://upload.wikimedia.org/wikipedia/commons/6/6d/2017_Honda_Civic_SR_VTEC_1.0_Front.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/f/f6/2017_Honda_Civic_SR_VTEC_1.0_Rear.jpg",
-  ];
-
-  function handleNext() {
-    if (photoIndex < carImage.length - 1) {
-      setPhotoIndex((prev) => prev + 1);
+  useEffect(()=>{
+    if (cart.includes(car)) {
+      isInCart(true);
     } else {
-      setPhotoIndex(0);
+      isInCart(false);
     }
-  }
-
-  function handlePrev() {
-    if (photoIndex > 0) {
-      setPhotoIndex((prev) => prev - 1);
-    } else {
-      setPhotoIndex(carImage.length - 1);
-    }
-  }
+  },[cartHasUpdated, car, cart])
 
   //Handle Page Load Behavior
 
   const loadIndex = () => (car.id <= 10 ? car.id : car.id % 10);
 
   useEffect(() => {
-    console.log('running')
     setTimeout(() => {
       setHidden(false);
     }, 200 * loadIndex());
   }, []);
 
-  //handle Modal + scrolling
+  // Handle Opem Modal
 
   function handleModal() {
     imageRef.current.scrollIntoView({
-      behavior: "auto",
       block: "center",
       inline: "center",
       behavior: "smooth",
@@ -118,27 +101,55 @@ const Car = ({
       "https://upload.wikimedia.org/wikipedia/commons/f/f6/2017_Honda_Civic_SR_VTEC_1.0_Rear.jpg",
     ]);
   }
+  // handle direction
 
-  //
+  function handleNext() {
+      setCount(count + 1)
+      setPrev(count)    
+  }
+
+  function handlePrev() {
+    setCount(count - 1)
+    setPrev(count)
+  }
+
+  let direction = count > prev ? 'increasing' : 'decreasing';
+
+  let variants = {
+    enter: (direction) => ({ x: direction === 'increasing' ? 500 : -500 }),
+    center:{ x: 0 },
+    exit: (direction) => ({ x: direction === 'increasing' ? -500 : 500 })
+  }
+
+ // misc
+
+ const carImages = [
+  url,
+  "https://upload.wikimedia.org/wikipedia/commons/6/6d/2017_Honda_Civic_SR_VTEC_1.0_Front.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/f/f6/2017_Honda_Civic_SR_VTEC_1.0_Rear.jpg",
+];
 
   const unavailable =
     "https://media.istockphoto.com/vectors/no-camera-icon-vector-id1202407074?k=20&m=1202407074&s=170667a&w=0&h=vk73jggd8Aq5QdQOYdH35vXYE3fkj4plVRkQV4ibHSo=";
 
-
-  
   const renderStyles = {
     opacity: hidden ? "0" : "1",
     transition: ".2s all",
   };
 
+  //$30,000, 60-month loan at 4% would be $3,150. So, your monthly payment would be $552.50 ($30,000 + $3,150 ÷ 60 = $552.50). 
 
-  useEffect(()=>{
-    if(liked){
-      setFavorites([...favorites, car])
+  const taxAndFees = Math.floor((price * 0.07) + 1000)
+  const monthlyPayment = Math.floor(((price* 1.1) + taxAndFees) / 60)
+
+  const addToFavorites = () => {
+    if(favorites.includes(car)){
+      let filteredFavorites = favorites.filter((favorite) => favorite.id !== car.id)
+      setFavorites(filteredFavorites);
     }else{
-      setFavorites(favorites.filter((favorite) => favorite.id !== car.id));
+      setFavorites([...favorites, car]);
     }
-  },[liked])
+  }
 
   return (
     <div>
@@ -162,8 +173,8 @@ const Car = ({
           <FontAwesomeIcon
             className="like-button"
             icon={faHeart}
-            onClick={()=>setLiked(!liked)}
-            style={{color: liked && 'rgb(255,90,90)'}}
+            onClick={addToFavorites}
+            style={{ color: favorites.includes(car) && 'rgb(255,90,90)'}}
           />
           <motion.button
             className="cart-button"
@@ -175,7 +186,11 @@ const Car = ({
             onMouseEnter={mouseEnterBehavior}
             onMouseLeave={mouseLeaveBehavior}
             animate={{ x: hover ? "-60px" : 0 }}
-            transition={{ type: "spring", duration: hover ? 0.1 : 0.4 , bounce: hover? 0.8 : 0.4 }}
+            transition={{
+              type: "spring",
+              duration: hover ? 0.1 : 0.4,
+              bounce: hover ? 0.8 : 0.4,
+            }}
             onClick={handleCart}
           >
             {!inCart ? (
@@ -189,25 +204,39 @@ const Car = ({
             {make} {model}
           </p>
           {url?.length > 1 ? (
-            <div
-              className='carImage'
-              ref={imageRef}
-              // src={carImage[photoIndex]}
-              // alt=""
-              // width="100%"
-              //height="250px"
-              onClick={handleModal}
-              style={{ backgroundImage: `url(${carImage[photoIndex]})`}}
-            />
+            <div 
+            className='imageWrapper'
+            ref={imageRef}
+              style={{ overflow: "hidden", height: '250px', position:"relative", backgroundColor:'black' }}
+              >
+              <AnimatePresence mode="wait" custom={direction} initial={false}> 
+                <motion.div
+                  className="carImage"
+                  key={count}
+                  transition={{ duration: .3, type: 'spring' }}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  custom={direction}
+                  onClick={handleModal}
+                  style={{ backgroundImage: `url(${carImages[Math.abs(count) % carImages.length]})` }}
+                />
+              </AnimatePresence>
+            </div>
           ) : (
             <img src={unavailable} alt="" width="70%" height="250px" />
           )}
-          <ul className="details">
+          <ul className="description">
             <li>Miles: {miles.toLocaleString("en-US")}</li>
-            <li>${price.toLocaleString("en-US")}</li>
+            <li>
+              ${price.toLocaleString("en-US")}
+              <span> Est. ${monthlyPayment.toLocaleString("en-US")}/mo.</span>
+            </li>
             <li>Year: {year}</li>
             <li>Transmission: {transmission}</li>
             <li>{used ? "pre-owned" : "new"}</li>
+            <li>Verified</li>
           </ul>
           {url.length > 1 && (
             <div className="swipe-buttons">
