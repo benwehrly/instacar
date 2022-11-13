@@ -28,7 +28,7 @@ const RecentSearches = ({ recent, setRecent, setNewCars, cars, favorites }) => {
       )}
       <h4>Favorites</h4>
       {favorites.length > 0 ? 
-      (favorites.map((favorite) => <FavoriteTab favorite={favorite}/>)
+      (favorites.map((favorite) => <FavoriteTab favorite={favorite} setNewCars={setNewCars} cars={cars}/>)
       ) : (
         <h5>none favorited</h5>
       )}

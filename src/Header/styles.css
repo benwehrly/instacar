@@ -214,8 +214,9 @@ select {
 @media (max-width: 600px) {
 
   h2{
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-left: 10px;
+    margin-top: 0;
   }
   input {
     width: 200px;

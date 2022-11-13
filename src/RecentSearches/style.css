@@ -1,9 +1,7 @@
 .recent {
   position: sticky;
-  top: 420px;
-  /* left: 60px; */
+  top: 140px;
   padding: 0;
-  width: 160px;
   width: 16vw;
   box-shadow: 0 4px 15px 0 rgb(0 0 0 / 8%);
   overflow: hidden;
@@ -11,6 +9,8 @@
   margin-left: 5%;
   z-index: 2;
   border-radius: 6px;
+  max-height: 65vh;
+  overflow-y: scroll;
 }
 
 .recent > h4 {
@@ -32,8 +32,7 @@
 }
 
 .recent > p:hover {
-  background-color: rgb(225, 75, 75);
-  color:white;
+  background-color: rgb(240,240,240);
 }
 
 @media (max-width: 800px) {

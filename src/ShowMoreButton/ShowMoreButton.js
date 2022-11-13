@@ -1,8 +1,8 @@
 import "./style.css";
 
-const ShowMoreButton = ({ setMaxItems }) => {
+const ShowMoreButton = ({ setMaxItems, maxItems }) => {
   const handleClick = () => {
-    setMaxItems((prev) => prev + 10);
+    setMaxItems(maxItems + 10);
   };
 
   return (
