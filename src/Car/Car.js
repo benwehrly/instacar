@@ -1,5 +1,7 @@
 import "./style.css";
 import { useState, useRef, useEffect } from "react";
+import front from '../assets/front.jpg'
+import back from '../assets/back.jpg'
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -97,8 +99,8 @@ const Car = ({
     setOpenModal(true);
     setModalImages([
       url,
-      "https://upload.wikimedia.org/wikipedia/commons/6/6d/2017_Honda_Civic_SR_VTEC_1.0_Front.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/f/f6/2017_Honda_Civic_SR_VTEC_1.0_Rear.jpg",
+      front,
+      back,
     ]);
   }
   // handle direction
@@ -125,8 +127,9 @@ const Car = ({
 
  const carImages = [
   url,
-  "https://upload.wikimedia.org/wikipedia/commons/6/6d/2017_Honda_Civic_SR_VTEC_1.0_Front.jpg",
-  "https://upload.wikimedia.org/wikipedia/commons/f/f6/2017_Honda_Civic_SR_VTEC_1.0_Rear.jpg",
+  front,
+  back,
+  // "https://upload.wikimedia.org/wikipedia/commons/f/f6/2017_Honda_Civic_SR_VTEC_1.0_Rear.jpg",
 ];
 
   const unavailable =

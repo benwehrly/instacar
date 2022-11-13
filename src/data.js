@@ -136,8 +136,8 @@ const data = [{
     type: "car sedan",
     color: "black",
     year: "2020",
-    miles: "55000",
-    price: "16000",
+    miles: 55000,
+    price: 16000,
     transmission: "automatic",
     used: true,
     id: 11,
@@ -149,8 +149,8 @@ const data = [{
     model:'el camino',
     color:'black',
     year:'1981',
-    miles:'81000',
-    price:'15999',
+    miles:81000,
+    price:15999,
     transmission:'automatic',
     used:'true',
     id:12,
@@ -159,5 +159,3 @@ const data = [{
 ]
 
 export default data
-
-//hasura ^^^

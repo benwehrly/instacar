@@ -94,7 +94,7 @@
     width: 30vw;
     color: black;
     margin-top: 20px;
-    height: 20vh;
+    height: 22vh;
     overflow: scroll;
 }
 
@@ -120,4 +120,28 @@
 
 
 @media(max-width: 600px){
+    .cartContainer{
+        width: 100vw;
+    }
+
+    .cartItems {
+        width: 95vw;
+        height: 40vh;
+    }
+
+    .checkout {
+        width: 100vw;
+    }
+
+    .cartItem {
+      scale: .9;
+    }
+
+    .cartTitle{
+        margin: 130px auto 0 auto;
+    }
+
+    .closeCart {
+       top: 120px;
+    }
 }

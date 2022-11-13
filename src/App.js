@@ -27,10 +27,6 @@ export default function App() {
   const [ cartIsOpen, setCartIsOpen ] = useState(false);
   const [ cartHasUpdated, setCartHasUpdated ] = useState(false);
 
-  useEffect(() => {
-    console.log(modalImages);
-  }, [modalImages]);
-
   const isHomepage = newCars === cars
 
   const heroCategrories = ['New Arrivals', 'Great Deals', 'Staff Picks']
@@ -129,7 +125,7 @@ export default function App() {
         setCartHasUpdated={setCartHasUpdated}
         />
       <Chat />
-      {newCars.length > 0 && <ShowMoreButton setMaxItems={setMaxItems} />}
+      {newCars.length > 0 && <ShowMoreButton maxItems={maxItems} setMaxItems={setMaxItems} />}
       <Footer />
     </div>
   );

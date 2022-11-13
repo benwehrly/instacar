@@ -35,6 +35,8 @@ const Header = ({
 
   function handleSubmit(e) {
     e.preventDefault();
+    //// let filteredCars ==== cars.filter((car) => ....)
+    //// setNewCars(filteredCars)
     setNewCars(
       cars.filter((car) =>
         Object.values(car)
@@ -75,7 +77,7 @@ const Header = ({
                 onBlur={() => setTimeout(() => setFocused(false), 300)}
                 onChange={handleSearch}
                 value={searchTerm}
-                onClick={()=> setSearchTerm('')}
+                onClick={(e)=> e.target.select()}
               />
             </form>
             <FontAwesomeIcon
@@ -163,7 +165,6 @@ const Popular = ({ popular, setNewCars, cars, recent, setRecent, setSearchTerm }
         <p onClick={() => handlePopular(car)}>
           {car}
           <img
-            // src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-trending-up_90400.png"
             src={trendingIcon}
             alt=""
             width="15px"
@@ -175,41 +176,43 @@ const Popular = ({ popular, setNewCars, cars, recent, setRecent, setSearchTerm }
 };
 
 const SortBox = ({ setNewCars, newCars, cars }) => {
+  
   const [value, setValue] = useState(0);
-
-  const [sortedCars, setSortedCars] = useState([...newCars]);
 
   function handleSort(e) {
     setValue(parseInt(e.target.value));
     setNewCars([...newCars]); //<--sorted cars?
-    // setSortedCars([...newCars])
   }
 
   useEffect(() => {
+
+    let sortedCars = cars;
+
     switch (value) {
       case 0:
-        setNewCars(cars.sort((a, b) => a.id - b.id));
+        sortedCars.sort((a, b) => a.id - b.id);
         break;
       case 1:
-        setNewCars(cars.sort((a, b) => b.price - a.price));
+        sortedCars.sort((a, b) => b.price - a.price);
         break;
       case 2:
-        setNewCars(cars.sort((a, b) => a.price - b.price));
+        sortedCars.sort((a, b) => a.price - b.price);
         break;
       case 3:
-        setNewCars(cars.sort((a, b) => b.miles - a.miles));
+        sortedCars.sort((a, b) => b.miles - a.miles);
         break;
       case 4:
-        setNewCars(cars.sort((a, b) => a.miles - b.miles));
+        sortedCars.sort((a, b) => a.miles - b.miles);
         break;
       case 5:
-        setNewCars(cars.sort((a, b) => b.year - a.year));
+        sortedCars.sort((a, b) => b.year - a.year);
         break;
       case 6:
-        setNewCars(cars.sort((a, b) => a.year - b.year));
+        sortedCars.sort((a, b) => a.year - b.year);
         break;
     }
-    console.log(`sorted Cars: ${newCars}`);
+    // console.log(`sorted Cars: ${sortedCars}`);
+    setNewCars(sortedCars)
   }, [value]);
 
   return (
@@ -226,10 +229,6 @@ const SortBox = ({ setNewCars, newCars, cars }) => {
           <option value={6}>Year: Oldest to Newest</option>
         </select>
       </p>
-      {/* <div>
-        <p>Ascending</p>
-        <p>Descending</p>
-      </div> */}
     </div>
   );
 };
